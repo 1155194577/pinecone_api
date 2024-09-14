@@ -1,0 +1,7 @@
+certifi==2024.8.30
+pinecone==5.1.0
+pinecone-plugin-inference==1.1.0
+pinecone-plugin-interface==0.0.7
+tqdm==4.66.5
+typing_extensions==4.12.2
+urllib3==2.2.3
