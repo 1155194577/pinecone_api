@@ -2,8 +2,6 @@ from .config import INDEX_NAME,create_new_index,NAMESPACE_NAME
 from typing import List
 from .base_models import Vector
 index = create_new_index(INDEX_NAME)
-def test(a):
-    return a
 
 def add_vectors(namespace_name:str,vectors_arr: List[Vector]):
     print("Namespace:", namespace_name)
@@ -45,4 +43,19 @@ def del_vectors(namespace_name:str,vectors_id_arr:List[str]):
     except Exception as e:  
         print("Error in deleting vectors",str(e))
         return False
-    
+
+def get_vectors(namespace_name:str,vectors_id_arr:List[str]):
+    if namespace_name == "":
+        print("Namespace name is empty")
+        return False
+    if len(vectors_id_arr) == 0:
+        print("Vector list is empty")
+        return False
+    try:
+        res = index.fetch(ids=vectors_id_arr, namespace=namespace_name)
+        vectors = res.vectors
+        print("Successful, Number of vectors fetched: ",len(vectors))
+        return vectors
+    except Exception as e:
+        print("Error in fetching vectors",str(e))
+        return False
