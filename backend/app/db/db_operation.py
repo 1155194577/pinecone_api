@@ -1,6 +1,6 @@
 from .config import INDEX_NAME,create_new_index,NAMESPACE_NAME
 from typing import List
-from .base_models import Vector
+from ..base_models.db_base_models import Vector
 index = create_new_index(INDEX_NAME)
 
 def add_vectors(namespace_name:str,vectors_arr: List[Vector]):

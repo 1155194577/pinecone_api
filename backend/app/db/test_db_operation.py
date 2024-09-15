@@ -1,5 +1,5 @@
 from .db_operation import add_vectors, del_vectors, get_vectors,search_vectors
-from .base_models import Vector
+from ..base_models.db_base_models import Vector
 import pytest
 @pytest.mark.parametrize("namespace, vectors, expected", [
     ("test_namespace", [Vector(id="vec1", values=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8], metadata={"genre": "comedy"})], True),
