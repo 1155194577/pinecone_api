@@ -54,7 +54,7 @@ def get_vectors(namespace_name:str,vectors_id_arr:List[str]):
     try:
         res = index.fetch(ids=vectors_id_arr, namespace=namespace_name)
         vectors = res.vectors
-        print("Successful, Number of vectors fetched: ",len(vectors))
+        print("Successful, Number of vectors fetched: ",len(vectors),type(vectors))
         return vectors
     except Exception as e:
         print("Error in fetching vectors",str(e))

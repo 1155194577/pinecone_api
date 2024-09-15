@@ -4,3 +4,4 @@ class Vector(BaseModel):
     id: str
     values: list[float]
     metadata: dict
+
