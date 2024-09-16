@@ -79,3 +79,10 @@ def search_vectors(namespace_name: str, query_vector: Vector, top_k: int):
         print("Error in searching vectors", str(e))
         return False
     
+def vector_exist(namespace_name: str, vector_id: str):
+    try:
+        vectors = get_vectors(namespace_name, [vector_id])
+        return True if vector_id in vectors else False
+    except Exception as e:
+        print("Error in checking vector existence", str(e))
+        return False
