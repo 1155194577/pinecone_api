@@ -25,6 +25,11 @@ async def get_vector(vector_id:str = Query(None)):
 @vector_api_router.post("/")
 async def create_vector(vector:Vector):
     try:
+        vector_id = vector.id 
+        if len(vector_id) == 0:
+            raise InvalidVectorIdError(user_input=vector_id)
+        if vector_exist(NAMESPACE_NAME,vector_id):
+            raise VectorCreationError(message=f"Vector with id {vector_id} already exists")
         vector_dimension = len(vector.values)
         if vector_dimension != PINECONE_DIMENSION:
             raise VectorLengthError()
