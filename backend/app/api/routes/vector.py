@@ -1,10 +1,10 @@
-from fastapi import FastAPI ,APIRouter,Query,HTTPException
+from fastapi import APIRouter,Query,HTTPException
 from fastapi.responses import JSONResponse
-from app.api.status import status_code,status_message,VectorCreationError,VectorLengthError,InvalidVectorIdError,InvalidTopKError
+from app.api.status import status_code,VectorCreationError,VectorLengthError,InvalidVectorIdError,InvalidTopKError
 from app.util.load_abs_path import load_abs
 from app.db.db_operation import get_vectors,add_vectors,del_vectors,vector_exist,search_vectors
 from app.db.config import NAMESPACE_NAME,PINECONE_DIMENSION
-from app.base_models.db_base_models import Vector,VectorSearchResultArray,VectorSearchResult,VectorSearchQuery
+from app.base_models.db_base_models import Vector,VectorSearchQuery
 load_abs()
 vector_api_router = APIRouter(prefix="/api/v1/vector", tags=["vector"])  
 
@@ -38,7 +38,7 @@ async def create_vector(vector:Vector):
         return JSONResponse(status_code=status_code["success"],content={"isSuccessfulCreation":isSuccessfulCreation})
     except Exception as e:
         raise HTTPException(status_code=status_code["error"], detail=str(e))
-    
+
 @vector_api_router.delete("/")
 async def delete_vector(vector_id:str = Query(None)): 
     try:

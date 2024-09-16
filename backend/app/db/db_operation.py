@@ -60,17 +60,16 @@ def get_vectors(namespace_name:str,vectors_id_arr:List[str]):
         print("Error in fetching vectors",str(e))
         return False
     
-def search_vectors(namespace_name: str, query_vector: Vector, top_k: int,allow_values: bool = False, allow_metadata: bool = False):
+def search_vectors(namespace_name: str, query_vector: List[float], top_k: int,allow_values: bool = False, allow_metadata: bool = False):
     if namespace_name == "":
         print("Namespace name is empty")
         return False
     if top_k <= 0:
         print("Top k must be greater than 0")
         return False
-    # print(query_vector.values)
     try:
         res = index.query(
-            vector=[[0.1]*8],
+            vector=query_vector,
             top_k=top_k,
             namespace=namespace_name,
             include_values=allow_values, 
