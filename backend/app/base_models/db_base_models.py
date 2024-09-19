@@ -21,3 +21,10 @@ class VectorSearchResult(BaseModel):
 
 class VectorSearchResultArray(BaseModel):
      matches:list
+
+class PineConeIndex(BaseModel):
+    name : str 
+    dimension: int
+    metric: str 
+    cloud : str 
+    region : str

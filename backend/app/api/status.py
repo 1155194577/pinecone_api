@@ -1,12 +1,14 @@
 from app.db.config import PINECONE_DIMENSION
 status_code = {
     "success": 200,
-    "invalid_vector_id": 500,
+    "invalid_vector_id": 404,
     "invalid_vector_length": 400,
     "error": 500,
     "invalid_vector_creation": 500, 
     "invalid_vector_deletion": 500, 
-    "invalid_top_k": 400    
+    "invalid_top_k": 400,
+    "invalid_index_name": 400,
+    "invalid_namespace_name": 400,
 }
 
 status_message = { 
@@ -14,8 +16,30 @@ status_message = {
     "invalid_vector_length": f"{PINECONE_DIMENSION} dimensions are required for a vector",
     "invalid_vector_creation": "Invalid vector creation",  
     "invalid_vector_deletion": "Invalid vector deletion",
-    "invalid_top_k": "Top k value should be greater than 0" 
+    "invalid_top_k": "Top k value should be greater than 0",
+    "invalid_index_name": "Invalid index name",
+    "invalid_namespace_name": "Invalid namespace name",
 }
+class InvalidIndexNameError(Exception):
+    def __init__(self, message=status_message["invalid_index_name"], status_code=status_code["invalid_index_name"], user_input=None):
+        self.message = message
+        self.status_code = status_code
+        self.user_input = user_input
+        super().__init__(self.message)
+    
+    def __str__(self):
+        return f"{self.message}: {self.user_input or "empty"} (status code: {self.status_code})"
+    
+class InvalidNamespaceNameError(Exception):
+    def __init__(self, message=status_message["invalid_namespace_name"], status_code=status_code["invalid_namespace_name"], user_input=None):
+        self.message = message
+        self.status_code = status_code
+        self.user_input = user_input
+        super().__init__(self.message)
+    
+    def __str__(self):
+        return f"{self.message}: {self.user_input or "empty"} (status code: {self.status_code})"
+    
 class VectorDeletionError(Exception):
     def __init__(self, message=status_message["invalid_vector_deletion"], status_code=status_code["invalid_vector_deletion"]):
         self.message = message
