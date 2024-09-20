@@ -53,7 +53,6 @@ pip install -r requirements.txt
 ```env
 PINECONE_API_KEY=your_pinecone_api_key
 NAMESPACE_NAME=your_namespace
-PINECONE_DIMENSION=your_dimension
 ```
 
 ## Usage
@@ -61,17 +60,17 @@ PINECONE_DIMENSION=your_dimension
 1. **Run the FastAPI application**:
 
 ```sh
-uvicorn app.api:app --reload
+python3 main.py
 ```
 
 2. **Access the API**:
-   Open your browser and go to `http://127.0.0.1:8000/redoc` to access the automatically generated API documentation.
+   Open your browser and go to `http://127.0.0.1:8080/redoc` to access the automatically generated API documentation.
 
 ## API Endpoints
 
 ### CRUD Operations
 
-- **Create Vector**: `POST /api/v1/vector/`
+- **Create Vector**: `POST /api/v1/vector/{index_name}/{namespace_name}/`
 
   - Request body:
 
@@ -83,7 +82,7 @@ uvicorn app.api:app --reload
   }
   ```
 
-- **Read Vector**: `GET /api/v1/vector/`
+- **Read Vector**: `GET /api/v1/vector/{index_name}/{namespace_name}/`
 
   - Query Parameters:
 
@@ -99,7 +98,7 @@ uvicorn app.api:app --reload
   }
   ```
 
-- **Delete Vector**: `DELETE /api/v1/vector/`
+- **Delete Vector**: `DELETE /api/v1/vector/{index_name}/{namespace_name}/`
 
   - Query Parameters:
 
@@ -113,7 +112,7 @@ uvicorn app.api:app --reload
   }
   ```
 
-- **Update Vector**: `PATCH /api/v1/vector/`
+- **Update Vector**: `PATCH /api/v1/vector/{index_name}/{namespace_name}/`
 
   - Query Parameters:
 
@@ -131,7 +130,7 @@ uvicorn app.api:app --reload
 
 ### Vector Search
 
-- **Search Vector**: `POST /api/v1/vector/search`
+- **Search Vector**: `POST /api/v1/vector/{index_name}/{namespace_name}/search`
 
   - Request body:
 
@@ -158,6 +157,93 @@ uvicorn app.api:app --reload
     ]
   }
   ```
+
+### Namespace Operations
+
+- **Delete Namespace**: `DELETE /api/v1/namespace/{namespace_name}/`
+
+  - Response:
+
+  ```json
+  {
+    "isSuccessfulDeletion": true
+  }
+  ```
+
+  ### Index Operations
+
+  - **Create Index**: `POST /api/v1/index/`
+
+    - Request body:
+
+    ```json
+    {
+      "name": "index_name",
+      "dimension": 128,
+      "metric": "cosine",
+      "cloud": "aws",
+      "region": "us-west-1"
+    }
+    ```
+
+    - Response:
+
+    ```json
+    {
+      "isSuccessfulCreation": true
+    }
+    ```
+
+  - **Delete Index**: `DELETE /api/v1/index/{index_name}/`
+
+    - Response:
+
+    ```json
+    {
+      "isSuccessfulDeletion": true
+    }
+    ```
+
+  - **Get All Index Names**: `GET /api/v1/indexes/`
+
+    - Response:
+
+    ```json
+    ["index_name_1", "index_name_2"]
+    ```
+
+  - **Get Index Dimension**: `GET /api/v1/index/{index_name}/dimension`
+
+    - Response:
+
+    ```json
+    {
+      "dimension": 128
+    }
+    ```
+
+  - **Get All Namespace Names**: `GET /api/v1/index/{index_name}/namespaces`
+
+    - Response:
+
+    ```json
+    ["namespace_1", "namespace_2"]
+    ```
+
+  - **Get Namespace Stats**: `GET /api/v1/index/{index_name}/namespace/{namespace_name}/stats`
+
+    - Response:
+
+    ```json
+    {
+      "dimension": 128,
+      "namespaces": {
+        "namespace_1": {
+          "vector_count": 1000
+        }
+      }
+    }
+    ```
 
 ## Contributing
 

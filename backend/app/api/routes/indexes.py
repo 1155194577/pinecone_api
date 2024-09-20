@@ -20,14 +20,6 @@ async def get_all_indexes():
     except Exception as e:
         raise HTTPException(status_code=status_code["error"], detail=str(e))    
 
-# @indexes_api_router.get("/{index_name}/namespaces")
-# async def get_all_namespaces(index_name:str):
-#     try:
-#         namespaces = get_all_namespaces_name(index_name)
-#         return JSONResponse(status_code=status_code["success"],content={"namespaces":namespaces})
-#     except Exception as e:
-#         raise HTTPException(status_code=status_code["error"], detail=str(e))    
-
 @indexes_api_router.get("/{index_name}/stats",response_model=IndexStats)   
 async def get_statistic_of_index(index_name:str):
     try:

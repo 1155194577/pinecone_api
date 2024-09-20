@@ -40,18 +40,6 @@ def test_create_index():
     res = create_index(pinecone_index)
     assert res is not None
 
-# def test_delete_index():
-#     index_name = "test-index"
-#     res = delete_index(index_name)
-#     assert res == True
-
-# def test_delete_namespace():
-#     index_name = "test-index"
-#     namespace_name = "test_namespace"
-#     res = delete_namespace(index_name, namespace_name)
-#     assert res == True
-
 if __name__ == "__main__":
    main_create_index()
-#    pytest.main(["-v", "test_index_operation.py"])
    pytest.main()

@@ -6,7 +6,6 @@ from app.db.db_operation import get_vectors,add_vectors,del_vectors,vector_exist
 from app.db.index_operation import get_dimension,get_index_by_index_name
 from app.base_models.db_base_models import Vector,VectorSearchQuery,VectorIdList
 from app.util.rules import is_valid_index_name,is_valid_namespace_name
-from typing import List
 
 load_abs()
 
