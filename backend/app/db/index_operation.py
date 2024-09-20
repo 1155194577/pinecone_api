@@ -69,15 +69,10 @@ def get_all_namespaces_name(index_name):
     keys = [key for key in arr]
     return keys
           
-def get_namespace_stats(index_name,namespace_name):
+def get_namespace_stats(index_name):
     index = pc.Index(index_name)
     stats = index.describe_index_stats()
-    arr = stats["namespaces"]
-    keys = [key for key in arr]
-    if namespace_name in keys:
-        return arr[namespace_name]
-    else:
-        return None
+    return stats
     
 def delete_namespace(index_name,namespace_name):
     try:

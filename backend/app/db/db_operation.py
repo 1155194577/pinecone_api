@@ -71,7 +71,12 @@ def get_vectors(index_name: str, namespace_name: str, vectors_id_arr: List[str])
         print("Error in fetching vectors", str(e))
         return False
 
-
+def get_all_vectors_id(index_name: str, namespace_name: str,vector_dimension:int):
+    index = get_index_by_index_name(index_name)
+    random_vector = [1.0]*vector_dimension
+    res = search_vectors(index_name, namespace_name, random_vector, vector_dimension, allow_values=False, allow_metadata=False)
+    print(res)
+    return res 
 def search_vectors(index_name: str, namespace_name: str, query_vector: List[float], top_k: int,
                    allow_values: bool = False, allow_metadata: bool = False):
     index = get_index_by_index_name(index_name)

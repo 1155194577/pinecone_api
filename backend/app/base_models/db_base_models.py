@@ -28,3 +28,9 @@ class PineConeIndex(BaseModel):
     metric: str 
     cloud : str 
     region : str
+
+class IndexStats(BaseModel):
+    dimension: int
+    index_fullness: float
+    namespaces: List[str]
+    total_vector_count: int

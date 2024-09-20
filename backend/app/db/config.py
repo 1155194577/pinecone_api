@@ -5,7 +5,7 @@ from pinecone import Pinecone,ServerlessSpec
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
-# Pinecone configuration
+# Pinecone configuration (sample)
 PINECONE_API_KEY = os.environ.get("PINE_CONE_KEY")
 PINECONE_DIMENSION = 8
 PINECONE_METRIC = "cosine"

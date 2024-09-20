@@ -19,6 +19,7 @@ status_message = {
     "invalid_top_k": "Top k value should be greater than 0",
     "invalid_index_name": "Invalid index name",
     "invalid_namespace_name": "Invalid namespace name",
+    "index_creation_successful": "Index creation successful"
 }
 class InvalidIndexNameError(Exception):
     def __init__(self, message=status_message["invalid_index_name"], status_code=status_code["invalid_index_name"], user_input=None):

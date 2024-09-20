@@ -2,10 +2,11 @@ from fastapi import APIRouter,Query,HTTPException
 from fastapi.responses import JSONResponse
 from app.api.status import status_code,VectorCreationError,VectorLengthError,InvalidVectorIdError,InvalidTopKError,InvalidIndexNameError,InvalidNamespaceNameError
 from app.util.load_abs_path import load_abs
-from app.db.db_operation import get_vectors,add_vectors,del_vectors,vector_exist,search_vectors
+from app.db.db_operation import get_vectors,add_vectors,del_vectors,vector_exist,search_vectors 
 from app.db.index_operation import get_dimension
 from app.base_models.db_base_models import Vector,VectorSearchQuery
 from app.util.rules import is_valid_index_name,is_valid_namespace_name
+
 load_abs()
 
 vector_api_router = APIRouter(prefix="/api/v1/vector/{index_name}/{namespace_name}", tags=["vector"])  
