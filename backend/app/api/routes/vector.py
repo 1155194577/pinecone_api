@@ -3,9 +3,10 @@ from fastapi.responses import JSONResponse
 from app.api.status import status_code,VectorCreationError,VectorLengthError,InvalidVectorIdError,InvalidTopKError,InvalidIndexNameError,InvalidNamespaceNameError
 from app.util.load_abs_path import load_abs
 from app.db.db_operation import get_vectors,add_vectors,del_vectors,vector_exist,search_vectors 
-from app.db.index_operation import get_dimension
-from app.base_models.db_base_models import Vector,VectorSearchQuery
+from app.db.index_operation import get_dimension,get_index_by_index_name
+from app.base_models.db_base_models import Vector,VectorSearchQuery,VectorIdList
 from app.util.rules import is_valid_index_name,is_valid_namespace_name
+from typing import List
 
 load_abs()
 
@@ -75,3 +76,21 @@ async def search_vector(index_name:str,namespace_name:str,query:VectorSearchQuer
         return JSONResponse(status_code=status_code["success"], content=query_response)
     except Exception as e:
         raise HTTPException(status_code=status_code["error"], detail=str(e))
+    
+@vector_api_router.get("/list",response_model=VectorIdList)
+async def get_vector_list_paginated(index_name:str,namespace_name:str,page_token:str = Query(None),limit:int = Query(10)):
+    try:
+        print("namespace,page_token,limit",namespace_name,page_token,limit)  
+        index = get_index_by_index_name(index_name)
+        results = index.list_paginated(
+        namespace=namespace_name,
+        pagination_token=page_token,
+        limit=limit)
+        vector_ids = [x["id"] for x in results["vectors"]]
+        token = results.get("pagination",{}).get("next",None)
+        print(vector_ids,token)
+        vector_id_list = VectorIdList(ids=vector_ids,page_token=token,limit=limit)
+        return vector_id_list
+    except Exception as e:
+        raise HTTPException(status_code=status_code["error"], detail=str(e))
+

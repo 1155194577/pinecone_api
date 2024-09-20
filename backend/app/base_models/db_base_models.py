@@ -34,3 +34,8 @@ class IndexStats(BaseModel):
     index_fullness: float
     namespaces: List[str]
     total_vector_count: int
+
+class VectorIdList(BaseModel):
+        ids: List[str]
+        page_token: Optional[str] = None
+        limit: int  
