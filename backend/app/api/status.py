@@ -30,8 +30,7 @@ class InvalidIndexNameError(Exception):
         super().__init__(self.message)
     
     def __str__(self):
-        return f"{self.message}: {self.user_input or "empty"} (status code: {self.status_code})"
-    
+        return "Invalid Index Name" 
 class InvalidNamespaceNameError(Exception):
     def __init__(self, message=status_message["invalid_namespace_name"], status_code=status_code["invalid_namespace_name"], user_input=None):
         self.message = message
@@ -40,8 +39,7 @@ class InvalidNamespaceNameError(Exception):
         super().__init__(self.message)
     
     def __str__(self):
-        return f"{self.message}: {self.user_input or "empty"} (status code: {self.status_code})"
-    
+       return "Invalid Namespace Name" 
 class VectorDeletionError(Exception):
     def __init__(self, message=status_message["invalid_vector_deletion"], status_code=status_code["invalid_vector_deletion"]):
         self.message = message
@@ -49,7 +47,7 @@ class VectorDeletionError(Exception):
         super().__init__(self.message)
     
     def __str__(self):
-        return f"{self.message} (status code: {self.status_code})"    
+        return "Vector Deletion Error"
 class VectorCreationError(Exception):
     def __init__(self, message=status_message["invalid_vector_creation"], status_code=status_code["invalid_vector_creation"]):
         self.message = message
@@ -57,7 +55,7 @@ class VectorCreationError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
-        return f"{self.message} (status code: {self.status_code})"
+        return "vector creation error"
 
 class VectorLengthError(Exception):
     def __init__(self, message=status_message["invalid_vector_length"], status_code=status_code["invalid_vector_length"]):
@@ -66,8 +64,8 @@ class VectorLengthError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
-        return f"{self.message} (status code: {self.status_code})"
-    
+        return "vector length error"
+
 class InvalidVectorIdError(Exception):
     def __init__(self, message=status_message["invalid_vector_id"], status_code=status_code["invalid_vector_id"],user_input=None):
         self.message = message
@@ -76,8 +74,8 @@ class InvalidVectorIdError(Exception):
         super().__init__(self.message)
     
     def __str__(self):
-        return f"{self.message}: {self.user_input or "empty"} (status code: {self.status_code})"
-    
+        return "invalid vector Id error"
+
 class InvalidTopKError(Exception):
     def __init__(self, message=status_message["invalid_top_k"], status_code=status_code["invalid_top_k"]):
         self.message = message
@@ -85,4 +83,4 @@ class InvalidTopKError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
-        return f"{self.message} (status code: {self.status_code})"
+         return "invalid Top k"
