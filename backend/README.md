@@ -52,12 +52,14 @@ pip install -r requirements.txt
 
 ```env
 PINECONE_API_KEY=your_pinecone_api_key
-NAMESPACE_NAME=your_namespace
+NAMESPACE_NAME=your_namespace 
 ```
+
+or : cd to root dir (backend) and type "pwd" , then type EXPORT="the abs path shown on terminal"
 
 ## Usage
 
-1. **Run the FastAPI application**:
+1. **Run the FastAPI application**: (at backend root dir)
 
 ```sh
 python3 main.py
