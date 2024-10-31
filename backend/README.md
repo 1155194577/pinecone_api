@@ -18,6 +18,7 @@ This project is a FastAPI application that allows you to perform CRUD (Create, R
 - Conduct vector searches using Pinecone.
 - FastAPI for building the API.
 - Easy integration with Pinecone for managing vectors.
+- Integration with amazon S3
 
 ## Technologies
 
