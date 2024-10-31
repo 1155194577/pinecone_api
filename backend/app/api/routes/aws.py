@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.base_models.s3_base_models import S3UrlData,S3UrlArrayReponse
 from app.api.status import status_message,status_code
 from typing import Optional
-aws_api_router = APIRouter(prefix="/api/v1/s3/{bucket_name}")  
+aws_api_router = APIRouter(prefix="/api/v1/s3/{bucket_name}", tags=["aws"])  
 load_abs()
 s3_client = boto3.client('s3')
 
