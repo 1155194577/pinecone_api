@@ -3,13 +3,46 @@ from fastapi.responses import JSONResponse
 from app.api.status import status_code,status_message
 from pydantic import BaseModel
 from typing import List
+import os
+import librosa
+from app.api.embedder import MusicEmbedder,Music
 embedding_api_router = APIRouter(prefix="/api/v1/embedding", tags=["embedding"])  
-class EmbeddingResponse(BaseModel):
-    embedding: List[int]
 
+
+class EmbeddingResponse(BaseModel):
+    embedding: list[float]
+
+    
 @embedding_api_router.post("/", response_model=EmbeddingResponse)
 async def convert_music_to_vector(file: UploadFile = File(...)):
+    music_path = f"/{file.filename}"  # Temporary path for the uploaded file
     try:
-        return EmbeddingResponse(embedding=[1, 2, 3, 3,9,3])
+        curr_dir = os.getcwd()
+        full_file_path = os.path.join(curr_dir,music_path)
+        contents = await file.read()
+        print(contents)
+        with open(full_file_path, "wb") as f:
+            f.write(contents)
+        print(full_file_path)
+
+        # Load the audio file using librosa
+        print("ddd")
+        y, sr = librosa.load(full_file_path, sr=None)
+    
+
+        # Create a Music instance (assuming Music is defined elsewhere)
+        query = Music(y=y, sr=sr, music_name=file.filename, audio_url=None)  # Replace None with actual S3 URL if needed
+        query.compute_music_features()
+
+        # Convert music to vector (assuming embedder is defined and configured)
+        query_vector = MusicEmbedder.convert_music_to_vector(query)
+        print(query_vector)
+        return EmbeddingResponse(embedding=query_vector)
+
     except Exception as e:
-        raise HTTPException(status_code=status_code["error"], detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+    
+    finally:
+        # Clean up the temporary audio file
+        if os.path.exists(music_path):
+            os.remove(music_path)  # Remove the file if it exists
