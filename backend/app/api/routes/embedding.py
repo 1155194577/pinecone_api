@@ -33,10 +33,13 @@ async def convert_music_to_vector(file: UploadFile = File(...)):
         query = Music(y=y, sr=sr, music_name=file.filename, audio_url=None)  # Replace None with actual S3 URL if needed
         query.compute_music_features()
         print(query)
-        ##query_vector = MusicEmbedder.convert_music_to_vector(query)
-        ##print(query_vector)
-        demo_vector= [1,2,3,4,5,6] 
-        return EmbeddingResponse(embedding=demo_vector)
+
+        mean_map = {'tempo': 114.41952910695562, 'stability_score': 0.0003781953034425454, 'beat_strength_score': 4.0758667, 'dynamic_range': 0.3061429, 'mean_rmse': 0.11166762, 'mean_spectral_centroid': 1731.5637774109998}
+        sd_map = {'tempo': 31.647657911216665, 'stability_score': 0.00010039213540881786, 'beat_strength_score': 1.3448074, 'dynamic_range': 0.13990557, 'mean_rmse': 0.0751132, 'mean_spectral_centroid': 532.3787573483235}
+        embedder1 = MusicEmbedder(mean_map,sd_map)
+        query_vector = embedder1.convert_music_to_vector(query)
+        print(query_vector)
+        return EmbeddingResponse(embedding=query_vector)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
