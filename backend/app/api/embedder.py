@@ -1,3 +1,5 @@
+import librosa
+import numpy as np 
 class MusicEmbedder:
     def __init__(self, mean_map, sd_map):
         self.mean_map = mean_map

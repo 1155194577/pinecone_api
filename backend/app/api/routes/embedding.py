@@ -15,15 +15,14 @@ class EmbeddingResponse(BaseModel):
     
 @embedding_api_router.post("/", response_model=EmbeddingResponse)
 async def convert_music_to_vector(file: UploadFile = File(...)):
-    music_path = f"/{file.filename}"  # Temporary path for the uploaded file
+    music_path = f"{file.filename}"  # Temporary path for the uploaded file
     try:
         curr_dir = os.getcwd()
         full_file_path = os.path.join(curr_dir,music_path)
         contents = await file.read()
-        print(contents)
         with open(full_file_path, "wb") as f:
             f.write(contents)
-        print(full_file_path)
+        print(librosa.__version__,full_file_path)
 
         # Load the audio file using librosa
         print("ddd")
@@ -33,11 +32,11 @@ async def convert_music_to_vector(file: UploadFile = File(...)):
         # Create a Music instance (assuming Music is defined elsewhere)
         query = Music(y=y, sr=sr, music_name=file.filename, audio_url=None)  # Replace None with actual S3 URL if needed
         query.compute_music_features()
-
-        # Convert music to vector (assuming embedder is defined and configured)
-        query_vector = MusicEmbedder.convert_music_to_vector(query)
-        print(query_vector)
-        return EmbeddingResponse(embedding=query_vector)
+        print(query)
+        ##query_vector = MusicEmbedder.convert_music_to_vector(query)
+        ##print(query_vector)
+        demo_vector= [1,2,3,4,5,6] 
+        return EmbeddingResponse(embedding=demo_vector)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
