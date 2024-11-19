@@ -1,18 +1,23 @@
 import librosa
 import numpy as np 
 class MusicEmbedder:
-    def __init__(self, mean_map, sd_map):
-        self.mean_map = mean_map
-        self.sd_map = sd_map
+    def __init__(self, min_map, max_map):
+        self.min_map = min_map
+        self.max_map = max_map
 
-    def standardize(self, x, feature):
-        """Standardizes the input value x using the mean and standard deviation for the specified feature."""
-        mean = self.mean_map.get(feature)
-        sd = self.sd_map.get(feature)
+    def min_max_scale(self, x, feature):
+        """Scales the input value x using the min and max for the specified feature."""
+        min_val = self.min_map.get(feature)
+        max_val = self.max_map.get(feature)
 
-        if sd == 0:
-            raise ValueError(f"Standard deviation cannot be zero for feature '{feature}' during standardization.")
-        return (x - mean) / sd
+        if min_val is None or max_val is None:
+            raise ValueError(f"Min and Max values must be provided for feature '{feature}'.")
+
+        # Prevent division by zero
+        if max_val - min_val == 0:
+            raise ValueError(f"Max value and min value are the same for feature '{feature}' during scaling.")
+        
+        return (x - min_val) / (max_val - min_val)
 
     def normalize(self, vector):
         """Normalizes the vector to have a magnitude of 1."""
@@ -22,10 +27,10 @@ class MusicEmbedder:
         return vector / magnitude
 
     def convert_music_to_vector(self, music):
-        """Converts music features to a standardized and normalized vector."""
-        # Extract and standardize values from feature_map
+        """Converts music features to a scaled and normalized vector."""
+        # Extract and scale values from feature_map
         feature_map = music.feature_to_dict()
-        vector = np.array([self.standardize(value, feature) for feature, value in feature_map.items()])
+        vector = np.array([self.min_max_scale(value, feature) for feature, value in feature_map.items()])
         # Normalize the resulting vector to have a magnitude of 1
         return self.normalize(vector)
 
