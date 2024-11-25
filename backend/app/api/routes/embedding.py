@@ -47,23 +47,8 @@ async def convert_music_to_vector(file: UploadFile = File(...)):
         query = Music(y=y, sr=sr, music_name=file.filename, audio_url=None)  # Replace None with actual S3 URL if needed
         query.compute_music_features()
         print(query)
-        min_map = {
-        'tempo': 51.6796875,
-        'stability_score': 0.0002617532912520465,
-        'beat_strength_score': 2.1055398,
-        'dynamic_range': 0.16750057,
-        'mean_rmse': 0.05267463,
-        'mean_spectral_centroid': 1157.1957226411498
-        }
-
-        max_map = {
-            'tempo': 184.5703125,
-            'stability_score': 0.0005519540777083322,
-            'beat_strength_score': 8.790406,
-            'dynamic_range': 0.6489084,
-            'mean_rmse': 0.31269574,
-            'mean_spectral_centroid': 2987.4354790822567
-        }
+        min_map = {'tempo': 51.6796875, 'stability_score': 0.00021142619917965743, 'beat_strength_score': 1.7689238, 'dynamic_range': 0.028075214, 'mean_rmse': 0.0080167325, 'mean_spectral_centroid': 724.0536236293076}
+        max_map = {'tempo': 184.5703125, 'stability_score': 0.0005543932024575787, 'beat_strength_score': 9.631109, 'dynamic_range': 0.66027665, 'mean_rmse': 0.31266674, 'mean_spectral_centroid': 3587.1374576583225}
         embedder1 = MusicEmbedder(min_map,max_map)
         query_vector = embedder1.convert_music_to_vector(query)
         print(query_vector)
